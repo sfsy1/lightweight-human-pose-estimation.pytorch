@@ -2,12 +2,18 @@ import math
 import numpy as np
 from operator import itemgetter
 
+# poi = [0, 1, 2, 5]
+# BODY_PARTS_KPT_IDS = [BODY_PARTS_KPT_IDS[i] for i in poi]
+# BODY_PARTS_PAF_IDS = [BODY_PARTS_PAF_IDS[i] for i in poi]
+
 BODY_PARTS_KPT_IDS = [[1, 2], [1, 5], [2, 3], [3, 4], [5, 6], [6, 7], [1, 8], [8, 9], [9, 10], [1, 11],
                       [11, 12], [12, 13], [1, 0], [0, 14], [14, 16], [0, 15], [15, 17], [2, 16], [5, 17]]
 BODY_PARTS_PAF_IDS = ([12, 13], [20, 21], [14, 15], [16, 17], [22, 23], [24, 25], [0, 1], [2, 3], [4, 5],
                       [6, 7], [8, 9], [10, 11], [28, 29], [30, 31], [34, 35], [32, 33], [36, 37], [18, 19], [26, 27])
 
 
+    
+    
 def linspace2d(start, stop, n=10):
     points = 1 / (n - 1) * (stop - start)
     return points[:, None] * np.arange(n) + start[:, None]
@@ -51,6 +57,8 @@ def extract_keypoints(heatmap, all_keypoints, total_keypoint_num):
 def group_keypoints(all_keypoints_by_type, pafs, pose_entry_size=20, min_paf_score=0.05, demo=False):
     pose_entries = []
     all_keypoints = np.array([item for sublist in all_keypoints_by_type for item in sublist])
+
+    
     for part_id in range(len(BODY_PARTS_PAF_IDS)):
         part_pafs = pafs[:, :, BODY_PARTS_PAF_IDS[part_id]]
         kpts_a = all_keypoints_by_type[BODY_PARTS_KPT_IDS[part_id][0]]

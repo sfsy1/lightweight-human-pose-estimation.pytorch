@@ -118,6 +118,7 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
             previous_poses = current_poses
         for pose in current_poses:
             pose.draw(img)
+            print(pose.keypoints)
         img = cv2.addWeighted(orig_img, 0.6, img, 0.4, 0)
         for pose in current_poses:
             cv2.rectangle(img, (pose.bbox[0], pose.bbox[1]),
