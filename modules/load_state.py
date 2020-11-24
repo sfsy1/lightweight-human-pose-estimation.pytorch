@@ -30,3 +30,15 @@ def load_from_mobilenet(net, checkpoint):
             print('[WARNING] Not found pre-trained parameters for {}'.format(target_key))
 
     net.load_state_dict(new_target_state)
+    
+    
+def load_partial_state(net, state_dict):
+
+    own_state = self.state_dict()
+    for name, param in state_dict.items():
+        if name not in own_state:
+             continue
+        if isinstance(param, Parameter):
+            # backwards compatibility for serialized parameters
+            param = param.data
+        own_state[name].copy_(param)

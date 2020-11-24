@@ -1,3 +1,48 @@
+# Introduction
+This repo contains:
+1. a simplified ONNX pose estimation + posture evaluation
+    * This is for integration with the windows app
+2. the original 2D multi-person pose estimation code
+
+# 1. Simplified ONNX pose estimation + posture evaluation
+## Dependencies
+* onnx
+* onnxruntime
+* numpy
+* matplotlib
+* cv2, pandas for live demo
+* jupyter
+    * .ipynb are jupyter notebooks containing interactive python scripts and markdown/media
+    * the best way to open this is using https://jupyter.org/, but you can also view it in github directly (no interactivity) or on http://colab.research.google.com/
+
+## Relevant files & Usage 
+* `demo_onnx.ipynb`
+    * the main script that loads the .onnx model file and functions. ***Refer to the content of the notebook for more details.***
+    * **First half** of this file demonstrates sequence of processing needed to get posture score from some already acquired image. 
+        1. image preprocessing
+        2. run neural network using onnx runtime to get heatmaps
+        3. postprocess heatmaps to get keypoint locations
+        4. calculate signals from keypoints
+        5. calculate scores using signals of current image, compared to some calibration signals (which can be obtained using a calibration image for step 1 to 4)
+    * **Second half** of this file is a live demo using openCV
+<br>
+<br>
+* `pose360small.onnx`
+    * this is the exported onnx model that i converted from the pytorch model
+    * the input (named 'input' in the onnx file) is a (1,3,360,640) image tensor
+    * the output is a list 4 heatmaps, but I'm only using the first heatmap output[0] (named 'output0' in the onnx file) of this dimension (1,19,45,80)
+<br>
+<br>
+* `scripts/simplified_functions.py`
+    * this file contains all the implementations of processing and scoring
+
+<br>
+
+## Extra
+* the model is modified and then exported to `.onnx` in the `demo.ipynb` file
+---
+
+
 # Real-time 2D Multi-Person Pose Estimation on CPU: Lightweight OpenPose
 
 This repository contains training code for the paper [Real-time 2D Multi-Person Pose Estimation on CPU: Lightweight OpenPose](https://arxiv.org/pdf/1811.12004.pdf). This work heavily optimizes the [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) approach to reach real-time inference on CPU with negliable accuracy drop. It detects a skeleton (which consists of keypoints and connections between them) to identify human poses for every person inside the image. The pose may contain up to 18 keypoints: ears, eyes, nose, neck, shoulders, elbows, wrists, hips, knees, and ankles. On COCO 2017 Keypoint Detection validation set this code achives 40% AP for the single scale inference (no flip or any post-processing done). The result can be reproduced using this repository. *This repo significantly overlaps with https://github.com/opencv/openvino_training_extensions, however contains just the necessary code for human pose estimation.*
