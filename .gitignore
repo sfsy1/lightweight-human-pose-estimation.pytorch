@@ -3,3 +3,4 @@ __pycache__
 .idea/
 pose_demo_onnx.zip
 demo_light.ipynb
+old_onnx/

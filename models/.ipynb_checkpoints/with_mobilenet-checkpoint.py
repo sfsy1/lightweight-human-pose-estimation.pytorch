@@ -147,9 +147,10 @@ class PrunedPoseEstimationWithMobileNet(nn.Module):
         
 
     def forward(self, x):
+        x = torch.unsqueeze(x,0)
         backbone_features = self.model(x)
         backbone_features = self.cpm(backbone_features)
 
         stages_output = self.initial_stage(backbone_features)
-
-        return stages_output[0]
+        output = torch.squeeze(stages_output[0])
+        return output

@@ -26,7 +26,7 @@ def preprocess_image(img):
     """
     img = cv2.resize(img, (640,360))
     img = normalize(img, [128,128,128] ,1/256).transpose(2,0,1)
-    return np.expand_dims(img,0).astype(np.float32)
+    return img.astype(np.float16)
 
 
 
@@ -72,7 +72,7 @@ def get_keypoint_locations(output_tensor, poi, calib):
     num_bodyparts = 0
 
     for i, kpt in enumerate(poi):
-        heatmap = np.squeeze(output_tensor[0][:,kpt,:,:]) # convert it back to 2D array
+        heatmap = output_tensor[0][kpt,:,:] # convert it back to 2D array
         peak_locations = find_peaks(heatmap) # get peak locations
         
         if len(peak_locations): # check that there are peaks
