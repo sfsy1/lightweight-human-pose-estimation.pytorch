@@ -25,19 +25,15 @@ This repo contains:
         4. calculate signals from keypoints
         5. calculate scores using signals of current image, compared to some calibration signals (which can be obtained using a calibration image for step 1 to 4)
     * **Second half** of this file is a live demo using openCV
-<br>
-<br>
+  
 * `pose360small.onnx`
     * this is the exported onnx model that i converted from the pytorch model
     * the input (named 'input' in the onnx file) is a (1,3,360,640) image tensor
     * the output is a list 4 heatmaps, but I'm only using the first heatmap output[0] (named 'output0' in the onnx file) of this dimension (1,19,45,80)
-<br>
-<br>
+  
 * `scripts/simplified_functions.py`
     * this file contains all the implementations of processing and scoring
-
-<br>
-
+  
 ## Extra
 * the model is modified and then exported to `.onnx` in the `demo.ipynb` file
 ---
