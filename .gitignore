@@ -5,3 +5,5 @@ pose_demo_onnx.zip
 demo_light.ipynb
 old_onnx/
 .ipynb_checkpoints/
+dist/
+build/
